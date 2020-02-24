@@ -8,10 +8,10 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Coaching | Login Form</title>
     <!--    Bootstrap-4.3 Stylesheet-->
-    <link rel="stylesheet" href="{{asset('/')}}/admin/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{asset('admin/assets/css/bootstrap.min.css')}}">
     <!--    Theme Stylesheet-->
-    <link rel="stylesheet" href="{{asset('/')}}/admin/assets/css/style.css">
-    <link rel="shortcut icon" href="{{asset('/')}}/admin/assets/images/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="{{asset('admin/assets/css/style.css')}}">
+    <link rel="shortcut icon" href="{{asset('admin/assets/images/favicon.png')}}" type="image/x-icon">
 </head>
 <body>
 
