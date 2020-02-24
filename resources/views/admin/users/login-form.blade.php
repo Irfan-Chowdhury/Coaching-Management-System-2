@@ -30,11 +30,11 @@
                 @csrf
 
                 <div class="form-group col-12 mb-3">
-                    <label for="fatherMobile" class="col-sm-3 col-form-label text-right">Email Address</label>
-                    <input type="text" name="email" id="email" placeholder="Email Address" class="form-control col-sm-9 @error('email') is-invalid @enderror" value="{{ old('email') }}" autocomplete="email" autofocus required minlength="8" required>
+                    <label for="fatherMobile" class="col-sm-3 col-form-label text-right">Mobile Number</label>
+                    <input type="number" name="mobile" id="mobile" placeholder="Type Mobile Number" class="form-control col-sm-9 @error('mobile') is-invalid @enderror" value="{{ old('mobile') }}" autocomplete="mobile" autofocus required minlength="8" required>
                     {{-- <span class="text-danger"></span> --}}
 
-                    @error('email')
+                    @error('mobile')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>
@@ -44,7 +44,7 @@
                 <div class="form-group col-12 mb-3">
                     <label for="password" class="col-sm-3 col-form-label text-right">Password</label>
                     <div class="input-group col-sm-9 pl-0 pr-0">
-                        <input type="password" id="password" name="password" class="form-control @error('password') is-invalid @enderror" value="{{ old('password') }}" autocomplete="password" autofocus placeholder="Password" required>
+                        <input type="password" id="password" name="password" class="form-control @error('password') is-invalid @enderror" value="{{ old('password') }}" autocomplete="password" autofocus placeholder="Type Password" required>
                         <div class="input-group-append">
                             <span class="input-group-text" id="passwordToggle"><i class="fa fa-eye-slash"></i></span>
                         </div>
