@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\User;
 
@@ -13,7 +14,14 @@ class UserRegistrationController extends Controller
 {
     public function showRegistrationForm()
     {
-        return view('admin.users.registration-form');
+        if (Auth::user()->role=="Admin") 
+        {
+            return view('admin.users.registration-form');
+        }
+        else {
+            // return redirect('/home');
+            return redirect()->back();
+        }
     }
 
     public function userSave(Request $request)
@@ -57,9 +65,17 @@ class UserRegistrationController extends Controller
     public function userList()
     {
 
-        $users = User::all();  
+        if (Auth::user()->role=="Admin") 
+        {
+            $users = User::all();  
 
-        return view('admin.users.user-list',['users'=>$users]);
+            return view('admin.users.user-list',['users'=>$users]);
+        }
+        else {
+            // return redirect('/home');
+            return redirect()->back();
+        }
+
 
     }
 }

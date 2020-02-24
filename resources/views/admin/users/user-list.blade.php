@@ -7,7 +7,7 @@
         <div class="col-12 pl-0 pr-0">
             <div class="form-group">
                 <div class="col-sm-12">
-                    <h4 class="text-center font-weight-bold font-italic mt-3">Class And Batch Wise Student List</h4>
+                    <h4 class="text-center font-weight-bold font-italic mt-3">User List</h4>
                 </div>
             </div>
 
