@@ -26,7 +26,8 @@
             </div>
             <form method="POST" action="{{ route('register') }}" enctype="multipart/form-data" autocomplete="off" class="form-inline">
                 @csrf 
-                {{-- <div class="form-group col-12 mb-3">
+                
+                <div class="form-group col-12 mb-3">
                     <label for="role" class="col-sm-3 col-form-label text-right">Role</label>
 
                     <select name="role" class="form-control col-sm-9" id="role">
@@ -34,24 +35,24 @@
                         <option value="Admin">Admin</option>
                         <option value="User">User</option>
                     </select>
-                </div> --}}
+                </div>
 
                 <div class="form-group col-12 mb-3">
                     <label for="name" class="col-sm-3 col-form-label text-right">Name</label>
-                    <input id="name" type="text" class="col-sm-9 form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" placeholder="Name" required autofocus>
+                    <input id="name" type="text" class="col-sm-9 form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" placeholder="Name" required autofocus autocomplete="name">
                     @error('name')
                         <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
                     @enderror
                 </div>
 
-                {{-- <div class="form-group col-12 mb-3">
+                <div class="form-group col-12 mb-3">
                     <label for="mobile" class="col-sm-3 col-form-label text-right">Mobile</label>
-                    <input id="mobile" type="text" class="col-sm-9 form-control" name="mobile" value="" placeholder="8801xxxxxxxxx" required>
-                </div> --}}
+                    <input id="mobile" type="text" class="col-sm-9 form-control" name="mobile" value="" placeholder="8801xxxxxxxxx" autocomplete="mobile" required>
+                </div>
 
                 <div class="form-group col-12 mb-3">
                     <label for="email" class="col-sm-3 col-form-label text-right">E-Mail Address</label>
-                    <input id="email" type="email" class="col-sm-9 form-control  @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" placeholder="Email Address" required autofocus>
+                    <input id="email" type="email" class="col-sm-9 form-control  @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" placeholder="Email Address" required autofocus autocomplete="email">
                     @error('email')
                         <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
                     @enderror
@@ -59,7 +60,7 @@
 
                 <div class="form-group col-12 mb-3">
                     <label for="password" class="col-sm-3 col-form-label text-right">Password</label>
-                    <input id="password" type="password" class="col-sm-9 form-control @error('password') is-invalid @enderror" name="password" placeholder="Password" required autocomplete="new-password">
+                    <input id="password" type="password" class="col-sm-9 form-control @error('password') is-invalid @enderror" name="password" placeholder="Password" required>
                     @error('password')
                         <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
                     @enderror
@@ -67,7 +68,7 @@
 
                 <div class="form-group col-12 mb-3">
                     <label for="password-confirm" class="col-sm-3 col-form-label text-right">Confirm Password</label>
-                    <input id="password-confirm" type="password" class="col-sm-9 form-control" name="password_confirmation" placeholder="Confirm Password" required autocomplete="new-password">
+                    <input id="password-confirm" type="password" class="col-sm-9 form-control" name="password_confirmation" placeholder="Confirm Password" required>
                 </div>
 
                 <div class="form-group col-12 mb-3">

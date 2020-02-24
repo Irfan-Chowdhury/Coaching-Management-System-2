@@ -104,7 +104,22 @@
             </li>
         </ul>
 
-        <a class="font-weight-bold my-2 my-sm-0 mr-2 logout" href="#">Logout</a>
+        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+            @csrf
+        </form>
+
+        <a onclick="event.preventDefault();
+        document.getElementById('logout-form').submit();" href="{{ route('logout') }}" class="font-weight-bold my-2 my-sm-0 mr-2 logout">Logout</a>
+        
+        {{-- <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="{{ route('logout') }}"
+               onclick="event.preventDefault();
+                             document.getElementById('logout-form').submit();">
+                {{ __('Logout') }}
+            </a>
+
+            
+        </div> --}}
 
         <!--        <form class="form-inline my-2 my-lg-0">-->
         <!--            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">-->
