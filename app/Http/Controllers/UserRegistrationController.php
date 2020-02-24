@@ -78,4 +78,42 @@ class UserRegistrationController extends Controller
 
 
     }
+
+    public function userProfile($userId)
+    {
+        $user = User::find($userId);
+
+        return view('admin.users.profile',compact('user'));
+        // return $user;
+    }
+
+    public function changeUserInfo($id)
+    {
+        $user = User::find($id);
+
+        return view('admin.users.change-user-info',compact('user'));
+    }
+
+    // public function userInfoUpdate(Request $request,$id)
+    public function userInfoUpdate(Request $request)
+    {
+        $this->validate($request,[
+            'name'   => 'required|string|max:255',
+            'mobile' => 'required|string|max:13|min:13',
+            'email' => 'required|string|max:255|email'
+        ]); 
+
+        // $user = User::find($id);
+        $user = User::find($request->user_id);
+        $user->name   = $request->name;
+        $user->mobile = $request->mobile;
+        $user->email  = $request->email;
+
+        $user->update();
+
+        // return redirect("/user-profile/$id")->with('message','Data Updated Successfull.');
+        return redirect("/user-profile/$request->user_id")->with('message','Data Updated Successfull.');
+    }
+
+
 }

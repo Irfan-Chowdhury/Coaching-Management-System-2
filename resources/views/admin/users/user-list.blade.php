@@ -1,5 +1,7 @@
 @extends('admin.master')
 
+@section('title','User List')
+
 @section('main-content')
     <!--Content Start-->
 <section class="container-fluid">

@@ -6,7 +6,7 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Coaching | Gallery</title>
+    <title>@yield('title','Coaching | Gallery') </title>
     <!--    Font Awesome Stylesheet-->
     <link rel="stylesheet" href="{{asset('admin/assets/fonts/fa/css/all.min.css')}}">
     <!--    Animate CSS-->
@@ -100,16 +100,17 @@
                         </ul>
                     </li>
                     
-                    @if (Auth::user()->role=="Admin")
                         <li class="dropdown-submenu">
                             <a class="dropdown-item dropdown-toggle" href="#">User</a>
                             <ul class="dropdown-menu">
+
+                            @if (Auth::user()->role=="Admin")
                                 <li><a href="{{route('user-registration')}}" class="dropdown-item">Add User</a></li>
                                 <li><a href="{{route('user-list')}}" class="dropdown-item">User List</a></li>
+                            @endif
+                                <li><a href="{{route('user-profile',['userId'=>Auth::user()->id])}}" class="dropdown-item">User Profile</a></li>
                             </ul>
                         </li>
-                    @endif
-
                 </ul>
             </li>
         </ul>
