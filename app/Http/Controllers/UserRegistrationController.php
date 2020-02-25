@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\User;
-
+use Image;
 
 class UserRegistrationController extends Controller
 {
@@ -113,6 +113,33 @@ class UserRegistrationController extends Controller
 
         // return redirect("/user-profile/$id")->with('message','Data Updated Successfull.');
         return redirect("/user-profile/$request->user_id")->with('message','Data Updated Successfull.');
+            // [note: any $varible suppurt in double cotation (""), but not in single cotation ('') ]
+    }
+
+    public function changeUserAvatar($id)
+    {
+        $user = User::find($id);
+
+        return view('admin.users.change-user-avatar',compact('user'));
+    }
+
+    public function updateUserPhoto(Request $request, $id)
+    {
+        $user = User::find($id);
+
+        $file = $request->file('avatar');
+        $imageName = $file->getClientOriginalName();
+        $directory = 'admin/assets/avatar/';
+        $imageUrl = $directory.$imageName;
+        // $file->move($directory,$imageUrl); //instead of this line I will use 'Image' Package
+
+        Image::make($file)->resize(300,300)->save($imageUrl);
+
+        $user->avatar = $imageUrl;
+        $user->update();
+
+        return redirect("user-profile/$id")->with('message','Photo Uploaded Successfully');
+
     }
 
 

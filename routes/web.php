@@ -56,6 +56,11 @@ Route::group(['middleware' => ['auth']], function () {
         'uses' => 'UserRegistrationController@userInfoUpdate',
         'as'   => 'user-info-update'
     ]);
+    
+    Route::get('/change-user-avatar/{id}','UserRegistrationController@changeUserAvatar')->name('change-user-avatar');
+
+    Route::post('/update-user-photo/{id}','UserRegistrationController@updateUserPhoto')->name('update-user-photo');
+
 
 });
 
