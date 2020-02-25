@@ -60,6 +60,10 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/change-user-avatar/{id}','UserRegistrationController@changeUserAvatar')->name('change-user-avatar');
 
     Route::post('/update-user-photo/{id}','UserRegistrationController@updateUserPhoto')->name('update-user-photo');
+    
+    Route::get('/change-user-password/{id}','UserRegistrationController@changeUserPassword')->name('change-user-password');
+    
+    Route::post('/user-password-update/{id}','UserRegistrationController@userPasswordUpdate')->name('user-password-update');
 
 
 });

@@ -42,7 +42,7 @@
                         <td>
                             <a href="{{route('change-user-info',$user->id)}}" class="btn btn-sm btn-dark">Change Info</span></a>
                             <a href="{{route('change-user-avatar',$user->id)}}" class="btn btn-sm btn-info">Change Photo</span></a>
-                            <a href="#" class="btn btn-sm btn-danger">Change Password</a>
+                            <a href="{{route('change-user-password',$user->id)}}" class="btn btn-sm btn-danger">Change Password</a>
                         </td>
                     </tr>    
                 </table>
