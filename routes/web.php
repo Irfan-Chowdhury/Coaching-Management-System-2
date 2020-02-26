@@ -18,7 +18,7 @@ Route::get('/', function () {
 
 
 
-Auth::routes();
+Auth::routes(['register' => false]); //for register route off
 
 Route::get('/home', 'HomeController@index')->name('home');
 
