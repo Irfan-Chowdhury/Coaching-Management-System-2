@@ -67,6 +67,8 @@ Route::group(['middleware' => ['auth']], function () {
     //--- General Section ---
     Route::get('/add-header-footer','HomePageController@addHeaderFooterForm')->name('add-header-footer');
     Route::post('/header-footer-save','HomePageController@headerFooterSave')->name('header-footer-save');
+    Route::get('/manage-header-footer/{id}','HomePageController@manageHeaderFooter')->name('manage-header-footer');
+    Route::post('/header-footer-update/{id}','HomePageController@headerFooterUpdate')->name('header-footer-update');
 
 
 });

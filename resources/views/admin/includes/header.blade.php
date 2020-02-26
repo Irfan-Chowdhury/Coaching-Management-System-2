@@ -113,8 +113,11 @@
                     <li class="dropdown-submenu">
                         <a class="dropdown-item dropdown-toggle" href="#">General</a>
                         <ul class="dropdown-menu">
+                        @if(!isset($header))
                             <li><a href="{{route('add-header-footer')}}" class="dropdown-item">Add Header & Footer</a></li>
-                            <li><a href="#" class="dropdown-item">Batch List</a></li>
+                        @elseif (isset($header))
+                            <li><a href="{{route('manage-header-footer',$header->id)}}" class="dropdown-item">Manage Header & Footer</a></li>
+                        @endif
                         </ul>
                     </li>
                     
