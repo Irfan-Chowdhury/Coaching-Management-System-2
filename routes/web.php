@@ -109,6 +109,12 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/batch/list','BatchManagementController@batchList')->name('batch-list');
     Route::get('/batch/list-by-ajax','BatchManagementController@batchListByAjax')->name('batch-list-by-ajax'); //Ajax for show list
 
+    Route::get('/batch/unpublished','BatchManagementController@batchUnpublished')->name('batch-unpublished'); //Unpublished by Ajax
+
+    Route::get('/batch/published','BatchManagementController@batchPublished')->name('batch-published'); //Published by Ajax
+    
+    Route::get('/batch/delete','BatchManagementController@batchDelete')->name('batch-delete'); //Delete by Ajax
+
 
 });
 

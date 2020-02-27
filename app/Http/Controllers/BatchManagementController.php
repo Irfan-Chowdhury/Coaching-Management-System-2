@@ -42,6 +42,58 @@ class BatchManagementController extends Controller
             'class_id' =>$request->id
         ])->get();
 
+        if (count($batches)>0) {
+            return view('admin.settings.batch.batch-list-by-ajax',compact('batches'));
+        }
+        else {
+            return view('admin.settings.batch.batch-empty-error');
+        }
+
+        // return view('admin.settings.batch.batch-list-by-ajax',compact('batches'));
+    }
+
+    public function batchUnpublished(Request $request)
+    {
+        $batch = Batch::find($request->batch_id);
+        $batch->status = 2;
+        $batch->save();
+
+        $batches = Batch::where([
+            'class_id' =>$request->class_id
+        ])->get();
+
+        return view('admin.settings.batch.batch-list-by-ajax',compact('batches'))->with('message','Batch unpublished successfully');
+    }
+
+    public function batchPublished(Request $request)
+    {
+        $batch = Batch::find($request->batch_id);
+        $batch->status = 1;
+        $batch->save();
+
+        $batches = Batch::where([
+            'class_id' =>$request->class_id
+        ])->get();
+
         return view('admin.settings.batch.batch-list-by-ajax',compact('batches'));
+    }
+    
+    public function batchDelete(Request $request)
+    {
+        $batch = Batch::find($request->batch_id);
+        $batch->delete();
+
+        $batches = Batch::where([
+            'class_id' =>$request->class_id
+        ])->get();
+
+        if (count($batches)>0) 
+        {
+            return view('admin.settings.batch.batch-list-by-ajax',compact('batches'));
+        }
+        else 
+        {
+            return view('admin.settings.batch.batch-empty-error');
+        }
     }
 }
