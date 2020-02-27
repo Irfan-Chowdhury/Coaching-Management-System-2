@@ -26,6 +26,13 @@
     <link rel="stylesheet" href="{{asset('admin/assets/css/style.css')}}">
     <!--    Favicon-->
     <link rel="shortcut icon" href="{{asset('admin/assets/images/favicon.png')}}" type="image/x-icon">
+    
+
+    <!--    jQuery  ||  We have to put this line into header file for Ajax   -->
+
+    {{-- <script src="{{asset('admin/assets/js/jquery-3.3.1.slim.min.js')}}"></script> --}}
+    <script src="{{asset('admin/assets/js/jquery-3.4.1.js')}}"></script>
+
 </head>
 <body>
 
@@ -105,8 +112,8 @@
                     <li class="dropdown-submenu">
                         <a class="dropdown-item dropdown-toggle" href="#">Batch</a>
                         <ul class="dropdown-menu">
-                            <li><a href="#" class="dropdown-item">Add Batch</a></li>
-                            <li><a href="#" class="dropdown-item">Batch List</a></li>
+                            <li><a href="{{route('add-batch')}}" class="dropdown-item">Add Batch</a></li>
+                            <li><a href="{{route('batch-list')}}" class="dropdown-item">Batch List</a></li>
                         </ul>
                     </li>
                     

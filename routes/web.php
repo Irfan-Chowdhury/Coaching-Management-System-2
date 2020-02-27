@@ -102,6 +102,14 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/class/edit/{id}','ClassManagementController@classEditForm')->name('class-edit');
     Route::post('/class/update/{id}','ClassManagementController@classUpdate')->name('class-update');
     Route::get('/class/delete/{id}','ClassManagementController@classDelete')->name('class-delete');
+
+    //Batch Management section
+    Route::get('/batch/add','BatchManagementController@addBatchForm')->name('add-batch');
+    Route::post('/batch/add','BatchManagementController@batchSave')->name('batch-save');
+    Route::get('/batch/list','BatchManagementController@batchList')->name('batch-list');
+    Route::get('/batch/list-by-ajax','BatchManagementController@batchListByAjax')->name('batch-list-by-ajax'); //Ajax for show list
+
+
 });
 
 
