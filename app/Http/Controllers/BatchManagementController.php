@@ -16,8 +16,9 @@ class BatchManagementController extends Controller
     public function batchSave(Request $request)
     {
         $this->validate($request,[
-            'class_id'   => 'required',
-            'batch_name' => 'required',
+            'class_id'         => 'required',
+            'batch_name'       => 'required',
+            'student_capacity' => 'required',
         ]);
 
         $batch = new Batch();
@@ -67,12 +68,12 @@ class BatchManagementController extends Controller
 
     public function batchPublished(Request $request)
     {
-        $batch = Batch::find($request->batch_id);
+        $batch = Batch::find($request->batch_id); //request from Ajax
         $batch->status = 1;
         $batch->save();
 
         $batches = Batch::where([
-            'class_id' =>$request->class_id
+            'class_id' =>$request->class_id //request from Ajax
         ])->get();
 
         return view('admin.settings.batch.batch-list-by-ajax',compact('batches'));
@@ -80,11 +81,11 @@ class BatchManagementController extends Controller
     
     public function batchDelete(Request $request)
     {
-        $batch = Batch::find($request->batch_id);
+        $batch = Batch::find($request->batch_id); //request from Ajax
         $batch->delete();
 
         $batches = Batch::where([
-            'class_id' =>$request->class_id
+            'class_id' =>$request->class_id //request from Ajax
         ])->get();
 
         if (count($batches)>0) 
@@ -95,5 +96,29 @@ class BatchManagementController extends Controller
         {
             return view('admin.settings.batch.batch-empty-error');
         }
+    }
+
+    public function batchEdit($id)
+    {
+        $batch = Batch::find($id);
+        $classes = ClassName::all();
+        return view('admin.settings.batch.edit-form',compact('batch','classes'));
+    }
+
+    public function batchUpdate(Request $request,$id)
+    {
+        $this->validate($request,[
+            'class_id'         => 'required',
+            'batch_name'       => 'required',
+            'student_capacity' => 'required',
+        ]);
+
+        $batch = Batch::find($id);
+        $batch->class_id         = $request->class_id;
+        $batch->batch_name       = $request->batch_name;
+        $batch->student_capacity = $request->student_capacity;
+        $batch->update();
+
+        return back()->with('message','Batch Updated successfully');
     }
 }

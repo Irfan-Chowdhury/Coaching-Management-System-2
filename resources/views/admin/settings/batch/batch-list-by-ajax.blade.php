@@ -2,6 +2,7 @@
     <tr>
         <td>#SL</td>
         <td>Batch Name</td>
+        <td>Student Capacity</td>
         <td>Action</td>
     </tr>
 </thead>
@@ -10,6 +11,7 @@
     <tr>
         <td>{{$key+1}}</td>
         <td>{{$batch->batch_name}}</td>
+        <td>{{$batch->student_capacity}}</td>
         <td>
             @if ($batch->status==1)
                 <button onclick='unpublished("{{$batch->id}}","{{$batch->class_id}}")' title="Deactivate" class="btn btn-warning fa fa-arrow-alt-circle-down"></button>
@@ -17,7 +19,7 @@
                 <a onclick='published("{{$batch->id}}","{{$batch->class_id}}")' title="Activate" class="btn btn-success fa fa-arrow-alt-circle-up"></a>
                 {{-- <button onclick='published("{{$batch->id}}","{{$batch->class_id}}")' title="Activate" class="btn btn-success fa fa-arrow-alt-circle-up"></button> --}}
             @endif
-                <a href="{{route('class-edit',$batch->id)}}" title="Edit" class="btn btn-info fa fa-edit"></a>
+                <a href="{{route('batch-edit',$batch->id)}}" title="Edit" class="btn btn-info fa fa-edit" target="_blank"></a>
                 <button onclick='batchdel("{{$batch->id}}","{{$batch->class_id}}")' class="btn btn-danger fa fa-trash-alt"></button>
         </td>
     </tr>
