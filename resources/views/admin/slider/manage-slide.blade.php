@@ -6,17 +6,17 @@
     <!--Content Start-->
 
 
-@if (Session::get('error_message'))
-    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-        <strong>Message: </strong>{{Session::get('error_message')}}
+@if (Session::get('success_message'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>Message: </strong>{{Session::get('success_message')}}
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
         </button>
     </div>
-
-@elseif (Session::get('success_message'))
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
-        <strong>Message: </strong>{{Session::get('success_message')}}
+    
+@elseif (Session::get('error_message'))
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>Message: </strong>{{Session::get('error_message')}}
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
         </button>
@@ -65,7 +65,9 @@
                         @else
                             <a href="{{route('slide-published',$slide->id)}}" title="Activate" class="btn btn-success fa fa-arrow-alt-circle-up"></a>
                         @endif
-                            <a href="#" class="btn btn-danger fa fa-trash-alt"></a>
+                            <a href="{{route('slide-edit',$slide->id)}}" class="btn btn-info fa fa-edit"></a>
+                            <a href="{{route('slide-delete',$slide->id)}}" class="btn btn-danger fa fa-trash-alt" onclick="return confirm('Are you sure to delete ?')"></a>
+                            {{-- <form action="{{route('slide-delete',$slide->id)}}" method="post"></form> --}}
                         </td>
                     </tr>
                     @endforeach

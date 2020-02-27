@@ -76,6 +76,9 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/manage-slide','SliderController@manageSlide')->name('manage-slide');
     Route::get('/slide-unpublished/{id}','SliderController@slideUnpublished')->name('slide-unpublished');
     Route::get('/slide-published/{id}','SliderController@slidePublished')->name('slide-published');
+    Route::get('/slide-edit/{id}','SliderController@slideEdit')->name('slide-edit');
+    Route::post('/update-slide/{id}','SliderController@updateSlide')->name('update-slide');
+    Route::get('/slide-delete/{id}','SliderController@slideDelete')->name('slide-delete');
     
     //Photo Gallery Section
     Route::get('/photo-gallery','SliderController@photoGallery')->name('photo-gallery');

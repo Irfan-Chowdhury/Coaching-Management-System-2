@@ -77,4 +77,38 @@ class SliderController extends Controller
 
         return view('admin.slider.photo-gallery',compact('slides'));
     }
+
+    public function slideEdit($id)
+    {
+        $slide = Slide::find($id);
+
+        return view('admin.slider.slide-edit-form',compact('slide'));
+    }
+
+    public function updateSlide(Request $request,$id)
+    {
+        // return $request->all();
+        $slide = Slide::find($id);
+        $slide->slide_title       = $request->slide_title;
+        $slide->slide_description = $request->slide_description;
+        $slide->status            = $request->status;
+        if ($request->file('slide_image')) 
+        {
+            unlink($slide->slide_image);
+            $slide->slide_image = $this->createSlide($request);
+        }
+
+        $slide->update();
+
+        return redirect('/manage-slide')->with('success_message','Operation Successfully');
+    }
+
+    public function slideDelete($id)
+    {
+        $slide = Slide::find($id);
+        unlink($slide->slide_image);
+        $slide->delete();
+
+        return back()->with('error_message','Slide Deleted Successfully');
+    }
 }
