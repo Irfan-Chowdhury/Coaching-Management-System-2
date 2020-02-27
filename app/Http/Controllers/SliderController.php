@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Slide;
 use Image;
+
+
 class SliderController extends Controller
 {
     public function addSlide()
@@ -42,5 +44,37 @@ class SliderController extends Controller
         Image::make($file)->resize(1400,570)->save($imageUrl);
         
         return $imageUrl;
+    }
+
+    public function manageSlide()
+    {
+        $slides = Slide::all();
+
+        return view('admin.slider.manage-slide',compact('slides'));
+    }
+
+    public function slideUnpublished($id)
+    {
+        $slide = Slide::find($id);
+        $slide->status = 2;
+        $slide->save();
+
+        return redirect()->back()->with('error_message','Slide Unpublished Sucessfully');
+    }
+    
+    public function slidePublished($id)
+    {
+        $slide = Slide::find($id);
+        $slide->status = 1;
+        $slide->save();
+
+        return redirect()->back()->with('success_message','Slide Unpublished Sucessfully');
+    }
+
+    public function photoGallery()
+    {
+        $slides = Slide::all();
+
+        return view('admin.slider.photo-gallery',compact('slides'));
     }
 }
