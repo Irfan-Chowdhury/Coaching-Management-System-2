@@ -93,6 +93,15 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/school/update/{id}','SchoolManagementController@schoolUpdate')->name('school-update');
     Route::get('/school/delete/{id}','SchoolManagementController@schoolDelete')->name('school-delete');
 
+    //Class Management section
+    Route::get('/class/add','ClassManagementController@addClassForm')->name('add-class');
+    Route::post('/class/add','ClassManagementController@classSave')->name('class-save');
+    Route::get('/class/list','ClassManagementController@classList')->name('class-list');
+    Route::get('/class/unpublished/{id}','ClassManagementController@classUnpublished')->name('class-unpublished');
+    Route::get('/class/published/{id}','ClassManagementController@classPublished')->name('class-published');
+    Route::get('/class/edit/{id}','ClassManagementController@classEditForm')->name('class-edit');
+    Route::post('/class/update/{id}','ClassManagementController@classUpdate')->name('class-update');
+    Route::get('/class/delete/{id}','ClassManagementController@classDelete')->name('class-delete');
 });
 
 
