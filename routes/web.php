@@ -69,6 +69,10 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/header-footer-save','HomePageController@headerFooterSave')->name('header-footer-save');
     Route::get('/manage-header-footer/{id}','HomePageController@manageHeaderFooter')->name('manage-header-footer');
     Route::post('/header-footer-update/{id}','HomePageController@headerFooterUpdate')->name('header-footer-update');
+    
+    //--- Slider Section ---
+    Route::get('/add-slide','SliderController@addSlide')->name('add-slide');
+    Route::post('/upload-slide','SliderController@uploadSlide')->name('upload-slide');
 
 
 });

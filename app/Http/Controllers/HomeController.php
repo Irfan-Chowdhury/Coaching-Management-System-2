@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Slide;
 
 class HomeController extends Controller
 {
@@ -23,7 +24,8 @@ class HomeController extends Controller
      */
     public function index()
     {
+        $slides = Slide::where('status',1)->get();
         // return view('home');
-        return view('admin.home.home');
+        return view('admin.home.home',compact('slides'));
     }
 }
