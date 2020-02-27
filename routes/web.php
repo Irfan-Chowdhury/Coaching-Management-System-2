@@ -83,6 +83,15 @@ Route::group(['middleware' => ['auth']], function () {
     //Photo Gallery Section
     Route::get('/photo-gallery','SliderController@photoGallery')->name('photo-gallery');
 
+    //School Management section
+    Route::get('/school/add','SchoolManagementController@addSchoolForm')->name('add-school');
+    Route::post('/school/add','SchoolManagementController@schoolSave')->name('school-save');
+    Route::get('/school/list','SchoolManagementController@schoolList')->name('school-list');
+    Route::get('/school/unpublished/{id}','SchoolManagementController@schoolUnpublished')->name('school-unpublished');
+    Route::get('/school/published/{id}','SchoolManagementController@schoolPublished')->name('school-published');
+    Route::get('/school/edit/{id}','SchoolManagementController@schoolEditForm')->name('school-edit');
+    Route::post('/school/update/{id}','SchoolManagementController@schoolUpdate')->name('school-update');
+    Route::get('/school/delete/{id}','SchoolManagementController@schoolDelete')->name('school-delete');
 
 });
 
