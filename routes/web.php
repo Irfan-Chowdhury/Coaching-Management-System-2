@@ -108,15 +108,18 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/batch/add','BatchManagementController@batchSave')->name('batch-save');
     Route::get('/batch/list','BatchManagementController@batchList')->name('batch-list');
     Route::get('/batch/list-by-ajax','BatchManagementController@batchListByAjax')->name('batch-list-by-ajax'); //Ajax for show list
-
     Route::get('/batch/unpublished','BatchManagementController@batchUnpublished')->name('batch-unpublished'); //Unpublished by Ajax
-    
     Route::get('/batch/published','BatchManagementController@batchPublished')->name('batch-published'); //Published by Ajax
-    
     Route::get('/batch/delete','BatchManagementController@batchDelete')->name('batch-delete'); //Delete by Ajax
-    
     Route::get('/batch/edit/{id}','BatchManagementController@batchEdit')->name('batch-edit'); 
     Route::post('/batch/update/{id}','BatchManagementController@batchUpdate')->name('batch-update'); 
+
+    //Student Type Management section
+    Route::get('/student-type','StudentTypeController@index')->name('student-type');
+
+    Route::post('/student-type-add','StudentTypeController@studentTypeAdd')->name('student-type-add'); //Create By Ajax
+
+    Route::get('/student-type-list','StudentTypeController@studentTypeList')->name('student-type-list'); //Read By Ajax
 
 
 });
