@@ -13,12 +13,13 @@
 
         <td>
         @if ($studentType->status==1)
-            <a href="{{route('school-unpublished',$studentType->id)}}" title="Deactivate" class="btn btn-warning fa fa-arrow-alt-circle-down"></a>
+            <button onclick="studentTypeUnpublished('{{$studentType->id}}')"  title="Unpublish" class="btn btn-warning fa fa-arrow-alt-circle-down"></button>
         @else
-            <a href="{{route('school-published',$studentType->id)}}" title="Activate" class="btn btn-success fa fa-arrow-alt-circle-up"></a>
+            <button onclick="studentTypePublished('{{$studentType->id}}')" title="Publish" class="btn btn-success fa fa-arrow-alt-circle-up"></button>
         @endif
-            <a href="{{route('school-edit',$studentType->id)}}" title="Edit" class="btn btn-info fa fa-edit"></a>
-            <a href="{{route('school-delete',$studentType->id)}}" onclick="return confirm('Are you Sure to delete ?')" class="btn btn-danger fa fa-trash-alt"></a>
+            <button onclick="studentTypeEdit('{{$studentType->id}}','{{$studentType->student_type}}')" title="Edit" class="btn btn-info fa fa-edit" data-toggle="modal" data-target="#studentTypeEditModal"></button>
+           
+            <button onclick="studentTypeDelete('{{$studentType->id}}')" class="btn btn-danger fa fa-trash-alt"></button>
         </td>
     </tr>
     @endforeach
@@ -27,3 +28,4 @@
         <td colspan="5">Student Type Not Found !!! </td>
     </tr>
 @endif
+

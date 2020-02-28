@@ -116,10 +116,16 @@ Route::group(['middleware' => ['auth']], function () {
 
     //Student Type Management section
     Route::get('/student-type','StudentTypeController@index')->name('student-type');
-
     Route::post('/student-type-add','StudentTypeController@studentTypeAdd')->name('student-type-add'); //Create By Ajax
-
     Route::get('/student-type-list','StudentTypeController@studentTypeList')->name('student-type-list'); //Read By Ajax
+
+    Route::get('/student-type-unpublish','StudentTypeController@studentTypeUnpublish')->name('student-type-unpublish'); //unpublish By Ajax
+    
+    Route::get('/student-type-publish','StudentTypeController@studentTypePublish')->name('student-type-publish'); //publish By Ajax
+    
+    Route::post('/student-type-update','StudentTypeController@studentTypeUpdate')->name('student-type-update'); //update By Ajax
+    
+    Route::get('/student-type-delete','StudentTypeController@studentTypeDelete')->name('student-type-delete'); //delete By Ajax
 
 
 });

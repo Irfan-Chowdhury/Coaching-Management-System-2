@@ -39,60 +39,8 @@
             <!-- Content Title End-->
 
 
-            <!-- Modal Start-->
-            <div class="modal fade" id="studentTypeAddModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
-                    <div class="modal-content">
-                       
-                        <!-- Modal Title & Button Start-->
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalCenterTitle">Student Type Add</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <!-- Modal Title & Button End-->
-
-                        <!-- Form Start -->
-                        <form action="{{route('student-type-add')}}" method="POST" id="studentTypeInsert">
-                            @csrf
-                            <div class="modal-body">
-                                <div class="form-group row">
-                                    <label for="schoolName" class="col-form-label col-sm-3 text-right">Class Name</label>
-                                    <div class="col-sm-9">
-                                        <select name="class_id" class="form-control @error('class_id') is-invalid @enderror" id="classId" required>
-                                            <option value="">--Select Class--</option>
-                                            @foreach ($classes as $class)
-                                                <option value="{{$class->id}}">{{$class->class_name}}</option>    
-                                            @endforeach
-                                        </select>
-                                        @error('class_id')
-                                            <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
-                                        @enderror
-                                    </div>
-                                </div>
-                
-                                <div class="form-group row">
-                                    <label for="studentType" class="col-form-label col-sm-3 text-right">Student Type</label>
-                                    <div class="col-sm-9">
-                                        <input type="text" class="form-control @error('student_type') is-invalid @enderror" name="student_type" value="{{ old('student_type') }}" id="studentType" placeholder="Write Student Type here" required>
-                                        @error('student_type')
-                                        <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
-                                        @enderror
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="reset" class="btn btn-warning" id="reset">Reset</button>
-                                <button type="submit" class="btn btn-primary">Save</button>
-                            </div>
-                        </form>
-                        <!-- Form End -->
-
-                    </div>
-                </div>
-            </div>
-            <!-- Modal End-->
+@include('admin.settings.student-type.modal.add-form')
+@include('admin.settings.student-type.modal.edit-form')
 
 
             <!-- Table Start-->
@@ -122,6 +70,7 @@
 
 
 <script>
+    //for Data Insert & then Read (show in table) 
     $('#studentTypeInsert').submit(function (element) {
         element.preventDefault();
         var url    = $(this).attr('action');        
@@ -142,6 +91,61 @@
         });     
     });
 
+    //for Unpublish
+    function studentTypeUnpublished(id){
+        $.get("{{route('student-type-unpublish')}}", {type_id:id}, function (data) {
+            console.log(data); //this line only for testing purpose
+            $('#studentTypeTable').empty().html(data); //প্রথমে studentTypeTable আইডিটাকে ধরে empty করে দিবে, দেন ঐটার ভিত্রে ডাটা পাস করাবে ।
+        });
+    }
+
+    //for Publish
+    function studentTypePublished(id){
+        $.get("{{route('student-type-publish')}}", {type_id:id}, function (data) {
+            // console.log(data); //this line only for testing purpose
+            $('#studentTypeTable').empty().html(data); //প্রথমে studentTypeTable আইডিটাকে ধরে empty করে দিবে, দেন ঐটার ভিত্রে ডাটা পাস করাবে ।
+        });
+    }
+
+    //for Edit (show)
+    function studentTypeEdit(id,name){
+        // alert(name); //just for checking
+        $('#studentTypeEditModal').find('#studentType').val(name); //studentTypeEditModal- Modal id
+        $('#studentTypeEditModal').find('#typeId').val(id);  //studentTypeEditModal- Modal id
+        // $('#studentTypeEditModal').modal('show'); // another option- I call the modal in 'student-type-table.blade.php' file in 'Edit' option
+    }
+
+    //for Update data
+    $('#studentTypeUpdate').submit(function (e) {  //studentTypeUpdate- Form id
+        e.preventDefault();
+        var url    = $(this).attr('action');        
+        var data   = $(this).serialize();        
+        var method = $(this).attr('method');   
+        $('#studentTypeEditModal #reset').click();  //studentTypeEditModal- Modal id
+        $('#studentTypeEditModal').modal('hide');   //studentTypeEditModal- Modal id
+        
+        $.ajax({
+            type : method,
+            url  : url,
+            data : data,          
+            success:function(data){
+                $('#studentTypeTable').empty().html(data);  //studentTypeTable- Table id
+            }
+        }); 
+    });
+
+    //for Dalete Data
+    function studentTypeDelete(id){
+        // var check = confirm("Are you Sure to Delete ?");  //or,
+        var msg = "Are you Sure to Delete ?";
+
+        if (confirm(msg)) 
+        {
+            $.get("{{route('student-type-delete')}}", {type_id:id}, function (data) {
+                $("#studentTypeTable").empty().html(data);
+            }) 
+        }
+    }
 </script>
 <!--Content End-->
 @endsection
