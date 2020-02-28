@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\StudentType;
 use App\ClassName;
 use App\Batch;
+
 class BatchManagementController extends Controller
 {
     public function addBatchForm()
@@ -13,18 +15,29 @@ class BatchManagementController extends Controller
         return view('admin.settings.batch.add-form',compact('classes'));
     }
 
+    public function classWiseStudentType(Request $request)
+    {
+        $student_types = StudentType::where('status','!=',3)
+                                    ->where('class_id',$request->class_id)
+                                    ->get();
+        return view('admin.settings.batch.class-wise-student-type',compact('student_types'));
+    }
+
     public function batchSave(Request $request)
     {
         $this->validate($request,[
             'class_id'         => 'required',
+            'student_type_id'  => 'required',
             'batch_name'       => 'required',
             'student_capacity' => 'required',
         ]);
 
         $batch = new Batch();
-        $batch->class_id   = $request->class_id;
-        $batch->batch_name = $request->batch_name;
-        $batch->status     = 1;
+        $batch->class_id        = $request->class_id;
+        $batch->student_type_id = $request->student_type_id;
+        $batch->batch_name      = $request->batch_name;
+        $batch->student_capacity= $request->student_capacity;
+        $batch->status          = 1;
 
         $batch->save();
 
@@ -40,8 +53,11 @@ class BatchManagementController extends Controller
     public function batchListByAjax(Request $request)
     {
         $batches = Batch::where([
-            'class_id' =>$request->id
-        ])->get();
+                            'class_id'        =>$request->class_id,
+                            'student_type_id' =>$request->student_type_id,
+                        ])
+                        ->where('status','!=','3')
+                        ->get();
 
         if (count($batches)>0) {
             return view('admin.settings.batch.batch-list-by-ajax',compact('batches'));

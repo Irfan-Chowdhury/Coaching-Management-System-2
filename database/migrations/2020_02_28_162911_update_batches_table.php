@@ -14,8 +14,7 @@ class UpdateBatchesTable extends Migration
     public function up()
     {
         Schema::table('batches', function (Blueprint $table) {
-            
-            $table->integer('student_capacity')->after('batch_name');
+            $table->integer('student_type_id')->after('class_id');
         });
     }
 

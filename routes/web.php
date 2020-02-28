@@ -105,9 +105,10 @@ Route::group(['middleware' => ['auth']], function () {
 
     //Batch Management section
     Route::get('/batch/add','BatchManagementController@addBatchForm')->name('add-batch');
+    Route::get('class-wise-student-type','BatchManagementController@classWiseStudentType')->name('class-wise-student-type'); //Ajax cascading-dropdown
     Route::post('/batch/add','BatchManagementController@batchSave')->name('batch-save');
     Route::get('/batch/list','BatchManagementController@batchList')->name('batch-list');
-    Route::get('/batch/list-by-ajax','BatchManagementController@batchListByAjax')->name('batch-list-by-ajax'); //Ajax for show list
+    Route::get('/batch/list-by-ajax','BatchManagementController@batchListByAjax')->name('batch-list-by-ajax'); //Ajax for show batch list by cascading-dropdown
     Route::get('/batch/unpublished','BatchManagementController@batchUnpublished')->name('batch-unpublished'); //Unpublished by Ajax
     Route::get('/batch/published','BatchManagementController@batchPublished')->name('batch-published'); //Published by Ajax
     Route::get('/batch/delete','BatchManagementController@batchDelete')->name('batch-delete'); //Delete by Ajax
@@ -118,15 +119,10 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/student-type','StudentTypeController@index')->name('student-type');
     Route::post('/student-type-add','StudentTypeController@studentTypeAdd')->name('student-type-add'); //Create By Ajax
     Route::get('/student-type-list','StudentTypeController@studentTypeList')->name('student-type-list'); //Read By Ajax
-
     Route::get('/student-type-unpublish','StudentTypeController@studentTypeUnpublish')->name('student-type-unpublish'); //unpublish By Ajax
-    
     Route::get('/student-type-publish','StudentTypeController@studentTypePublish')->name('student-type-publish'); //publish By Ajax
-    
     Route::post('/student-type-update','StudentTypeController@studentTypeUpdate')->name('student-type-update'); //update By Ajax
-    
     Route::get('/student-type-delete','StudentTypeController@studentTypeDelete')->name('student-type-delete'); //delete By Ajax
-
 
 });
 
