@@ -1,6 +1,6 @@
 @extends('admin.master')
 
-@section('title','Class Wise Batch List')
+@section('title','Class & Student-Type Wise Batch List')
 
 @section('main-content')
 <!--Content Start-->
@@ -10,7 +10,7 @@
             
             <div class="form-group">
                 <div class="col-sm-12">
-                    <h4 class="text-center font-weight-bold font-italic mt-3">Class & Student Type Wise Batch List</h4>
+                    <h4 class="text-center font-weight-bold font-italic mt-3">Class & Student-Type Wise Batch List</h4>
                 </div>
             </div>
 

@@ -33,13 +33,29 @@
                                     <div class="form-group row mb-0">
                                         <label for="schoolName" class="col-form-label col-sm-3 text-right">Class Name</label>
                                         <div class="col-sm-9">
-                                            <select name="class_id" class="form-control @error('class_id') is-invalid @enderror" id="classId" required>
+                                            <select name="class_id" id="classId" class="form-control @error('class_id') is-invalid @enderror" required>
                                                 <option value="">--Select Class--</option>
 
                                             @foreach ($classes as $class)
                                                 <option value="{{$class->id}}" {{ $batch->class_id == $class->id ?'selected':''}}>{{ $class->class_name}}</option>    
                                             @endforeach
                                                 @error('class_id')
+                                                <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                                                @enderror
+                                            </select>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            
+                            <tr>
+                                <td>
+                                    <div class="form-group row mb-0">
+                                        <label for="schoolName" class="col-form-label col-sm-3 text-right">Student Type</label>
+                                        <div class="col-sm-9">
+                                            <select name="student_type_id" id="studentTypeId" class="form-control @error('class_id') is-invalid @enderror" required>
+                                                <option value="{{$batch_student_type_id_and_type->student_type_id}}">{{$batch_student_type_id_and_type->student_type}}</option>                                           
+                                                @error('student_type_id')
                                                 <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
                                                 @enderror
                                             </select>
@@ -76,6 +92,7 @@
                                 </td>
                             </tr>
 
+
                             <tr><td><button type="submit" class="btn btn-block my-btn-submit">Update</button></td></tr>
 
                         </table>
@@ -85,4 +102,29 @@
         </div>
     </section>
     <!--Content End-->
+
+    <style>#overlay .loader{display: none}</style>
+    @include('admin.includes.loader')
+
+    <script>
+        $('#classId').change(function() 
+        {   
+            var classId = $(this).val();
+
+            if (classId) 
+            {
+                $('#overlay .loader').show();
+
+                $.get("{{route('class-wise-student-type')}}",{class_id:classId}, function (data) 
+                {
+                    $('#overlay .loader').hide(); //when the view return then loader will be off
+                    console.log(data);
+                    $('#studentTypeId').empty().html(data);
+                });
+            }
+            else{
+                $('#studentTypeId').empty().html('<option>--Select Student Type--</option>');
+            }
+        })
+    </script>
 @endsection

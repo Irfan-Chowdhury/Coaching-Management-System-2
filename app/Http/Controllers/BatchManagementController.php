@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\StudentType;
 use App\ClassName;
 use App\Batch;
+use DB;
 
 class BatchManagementController extends Controller
 {
@@ -116,9 +117,15 @@ class BatchManagementController extends Controller
 
     public function batchEdit($id)
     {
+        $batch_student_type_id_and_type = DB::table('batches')
+                                    ->join('student_types','student_types.id','=','batches.student_type_id')
+                                    ->select('batches.student_type_id','student_types.student_type')
+                                    ->where('batches.id','=', $id)
+                                    ->first(); 
+
         $batch = Batch::find($id);
         $classes = ClassName::all();
-        return view('admin.settings.batch.edit-form',compact('batch','classes'));
+        return view('admin.settings.batch.edit-form',compact('batch','classes','batch_student_type_id_and_type'));
     }
 
     public function batchUpdate(Request $request,$id)
@@ -131,6 +138,7 @@ class BatchManagementController extends Controller
 
         $batch = Batch::find($id);
         $batch->class_id         = $request->class_id;
+        $batch->student_type_id  = $request->student_type_id;
         $batch->batch_name       = $request->batch_name;
         $batch->student_capacity = $request->student_capacity;
         $batch->update();
