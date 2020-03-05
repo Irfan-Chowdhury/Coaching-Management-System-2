@@ -124,6 +124,12 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/student-type-update','StudentTypeController@studentTypeUpdate')->name('student-type-update'); //update By Ajax
     Route::get('/student-type-delete','StudentTypeController@studentTypeDelete')->name('student-type-delete'); //delete By Ajax
 
+    //Student Registration Section
+    Route::get('/student-registration-form','StudentController@studentRegistrationForm')->name('student-registration-form'); //delete By Ajax
+    Route::get('/birng-student-type','StudentController@birngStudentType')->name('birng-student-type'); // By Ajax
+    Route::get('/batch-roll-form','StudentController@batchRollForm')->name('batch-roll-form'); // By Ajax
+
+    
 });
 
 
