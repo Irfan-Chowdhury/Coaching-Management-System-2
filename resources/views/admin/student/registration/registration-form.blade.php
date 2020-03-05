@@ -23,7 +23,8 @@
                 </div>
             </div>
 
-            <form action="" method="post" enctype="multipart/form-data" class="form-inline">
+            <form action="{{route('student-reg-save')}}" method="POST" enctype="multipart/form-data" class="form-inline">
+                @csrf
                 <div class="form-group col-md-6 mb-3">
                     <label for="studentName" class="col-sm-4 col-form-label text-right">Student Name</label>
                     <input type="text" name="student_name" class="form-control col-sm-8" placeholder="Student Name" value="" id="studentName" required>

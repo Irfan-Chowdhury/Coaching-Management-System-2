@@ -27,7 +27,7 @@ class CreateStudentsTable extends Migration
             $table->string('email_address')->nullable();
             $table->string('sms_mobile');
             $table->date('date_of_admission');
-            $table->string('student_photo');
+            $table->string('student_photo')->nullable();
             $table->text('address');
             $table->tinyInteger('status');
             $table->text('password');
