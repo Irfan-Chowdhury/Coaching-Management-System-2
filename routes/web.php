@@ -129,6 +129,10 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/birng-student-type','StudentController@birngStudentType')->name('birng-student-type'); // By Ajax
     Route::get('/batch-roll-form','StudentController@batchRollForm')->name('batch-roll-form'); // By Ajax
     Route::post('/student/registration-form','StudentController@studentSave')->name('student-reg-save'); 
+    Route::get('/student/all-running-student-list','StudentController@allRunningStudentList')->name('all-running-student-list'); 
+    Route::get('/student/class-selection-form','StudentController@classSelectionForm')->name('class-selection-form'); 
+    Route::get('/student/class-student-type','StudentController@classStudentType')->name('class-student-type'); 
+    Route::get('/student/class-and-type-wise-student','StudentController@classAndTypeWiseStudent')->name('class-and-type-wise-student'); 
 
     
 });

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use DB;
 use App\Batch;
 use App\School;
 use App\Student;
@@ -95,6 +96,59 @@ class StudentController extends Controller
         }
 
         return back()->with('message','Registration Successful');
+    }
 
+    //All Running Student List start
+    public function allRunningStudentList()
+    {
+        // $students = Student::where('status','1')->get();
+        $students = DB::table('students')
+                    ->join('schools','students.school_id','=','schools.id')
+                    ->join('class_names','students.class_id','=','class_names.id')
+                    ->select('students.*','schools.school_name','class_names.class_name')
+                    ->where([
+                        'students.status'=>1
+                    ])->orderBy('students.class_id','ASC')->get();
+
+        // return $students;
+        return view('admin.student.all-running-student-list',compact('students'));
+    }
+
+
+    //Class Wise Student List start
+    public function classSelectionForm()
+    {
+        $classes = ClassName::where('status','1')->get();
+        return view('admin.student.class.class-selection-form',compact('classes'));
+    }
+
+    public function classStudentType(Request $request)
+    {
+        $types    = StudentType::where([
+                    'class_id' => $request->class_id,
+                    'status'   => 1
+                ])->get();
+
+        return view('admin.student.class.student-type',compact('types'));
+    }
+
+    public function classAndTypeWiseStudent(Request $request)
+    {
+        $students = DB::table('students')
+            ->join('schools','schools.id','=','students.school_id')
+            ->join('student_type_details','student_type_details.student_id','=','students.id')
+            ->join('batches','batches.id','=','student_type_details.batch_id')
+            ->select('students.*','schools.school_name','student_type_details.roll_no','batches.batch_name')
+            ->where([
+                'students.status'                  => 1,
+                'students.class_id'                => $request->class_id,
+                'student_type_details.type_id'     => $request->type_id,
+                'student_type_details.type_status' => 1,
+            // ])->get(); //testing for Console
+
+            ])->orderBy('student_type_details.roll_no','ASC')->get();
+
+        // return $students; //testing for Console
+        return view('admin.student.class.student-list',compact('students'));
     }
 }
