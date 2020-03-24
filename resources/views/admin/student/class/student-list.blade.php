@@ -31,8 +31,9 @@
             <td>{{$student->sms_mobile}}</td>
             <td>{{$student->id}}</td>
             <td>
-                <a href="#" class="btn btn-info fa fa-edit"></a>
-                <a href="#" class="btn btn-danger fa fa-trash-alt" onclick="return confirm('Are you sure to delete ?')"></a>
+                <a href="{{route('student-details',$student->id)}}" target="_blank" class="p-0 btn btn-dark fa fa-eye" title="Details"></a>
+                <a href="#" class="p-0 btn btn-info fa fa-edit"></a>
+                <a href="#" class="p-0 btn btn-danger fa fa-trash-alt" onclick="return confirm('Are you sure to delete ?')"></a>
             </td>
         </tr>
         @endforeach                         

@@ -133,8 +133,9 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/student/class-selection-form','StudentController@classSelectionForm')->name('class-selection-form'); 
     Route::get('/student/class-student-type','StudentController@classStudentType')->name('class-student-type'); 
     Route::get('/student/class-and-type-wise-student','StudentController@classAndTypeWiseStudent')->name('class-and-type-wise-student'); 
+    Route::get('/student/student-details/{id}','StudentController@studentDetails')->name('student-details'); 
 
-    
+
 });
 
 
