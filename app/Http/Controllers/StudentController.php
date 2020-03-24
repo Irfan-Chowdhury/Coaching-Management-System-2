@@ -79,18 +79,17 @@ class StudentController extends Controller
         $studentId = $student->id;
         $batches   = $request->batch_id;
         $rolls     = $request->roll;
-
         $studentTypes = $request->student_type;
         
         // Created 1/2/3/.. row in student_type table
         foreach ($studentTypes as $key => $studentType) 
         {
             $data             = new StudentTypeDetail();
-            $data->student_id = $studentId;
+            $data->student_id = $studentId;   // This is: $studentId = $student->id;
             $data->class_id   = $request->class_id;
             $data->type_id    = $key;
-            $data->batch_id   = $batches[$key];
-            $data->roll_no    = $rolls[$key];
+            $data->batch_id   = $batches[$key]; // $batches   = $request->batch_id;
+            $data->roll_no    = $rolls[$key];   // $rolls     = $request->roll;
             $data->type_status= 1;
             $data->save();
         }
@@ -134,7 +133,7 @@ class StudentController extends Controller
 
     public function classAndTypeWiseStudent(Request $request)
     {
-        $students = DB::table('students')
+        $students = DB::table('students')  //remember : I exchange the data around equal just left-right compare with video 
             ->join('schools','schools.id','=','students.school_id')
             ->join('student_type_details','student_type_details.student_id','=','students.id')
             ->join('batches','batches.id','=','student_type_details.batch_id')
@@ -150,5 +149,29 @@ class StudentController extends Controller
 
         // return $students; //testing for Console
         return view('admin.student.class.student-list',compact('students'));
+    }
+
+    public function studentDetails($id)
+    {
+        $students = $this->getSingleStudent($id);
+
+        return view('admin.student.details.profile',compact('students'));
+    }
+
+    protected function getSingleStudent($id)
+    {
+        $students = DB::table('students') //remember : I exchange the data around equal just left-right compare with video
+                    ->join('schools','schools.id','=','students.school_id')
+                    ->join('class_names','class_names.id','=','students.class_id')
+                    ->join('student_type_details','student_type_details.student_id','=','students.id')
+                    ->join('student_types','student_types.id','=','student_type_details.type_id')
+                    ->join('batches','batches.id','=','student_type_details.batch_id')
+                    ->select('students.*','schools.school_name','student_type_details.roll_no','batches.batch_name','class_names.class_name','student_types.student_type')
+                    ->where([
+                        'students.status' => 1,
+                        'students.id'     => $id,
+                    ])->orderBy('student_type_details.type_id','ASC')->get();
+        
+        return $students;
     }
 }
