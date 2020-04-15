@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use DB;
+use Image;
 use App\Batch;
 use App\School;
 use App\Student;
@@ -154,9 +155,37 @@ class StudentController extends Controller
     public function studentDetails($id)
     {
         $students = $this->getSingleStudent($id);
+        $schools  = School::all();
 
-        return view('admin.student.details.profile',compact('students'));
+        return view('admin.student.details.profile',compact('students','schools'));
     }
+
+    public function studentBasicInfoUpdate(Request $request)
+    {
+        $student = Student::find($request->student_id);
+
+        $student->student_name      = $request->student_name;
+        $student->school_id         = $request->school_id;
+        $student->father_name       = $request->father_name;
+        $student->father_mobile     = $request->father_mobile;
+        $student->father_profession = $request->father_profession;
+        $student->mother_name       = $request->mother_name;
+        $student->mother_mobile     = $request->mother_mobile;
+        $student->mother_profession = $request->mother_profession;
+        $student->email_address     = $request->email_address;
+        $student->sms_mobile        = $request->sms_mobile;
+
+        if (isset($request->student_photo)) 
+        {
+            $this->updateStudentPhoto($request);
+        }       
+        $student->address           = $request->address;
+        $student->update();
+
+        // return $this->studentDetails($request->student_id); //This is not working (in video)
+        return redirect()->route('student-details',$request->student_id);
+    }
+
 
     protected function getSingleStudent($id)
     {
@@ -173,5 +202,34 @@ class StudentController extends Controller
                     ])->orderBy('student_type_details.type_id','ASC')->get();
         
         return $students;
+    }
+
+    protected function updateStudentPhoto($request)
+    {
+        $student = Student::find($request->student_id);
+        if (isset($student->student_photo)) 
+        {
+            unlink($student->student_photo);
+            $this->uploadPhoto($request,$student);
+        }
+        else 
+        {
+            $this->uploadPhoto($request,$student);
+        }
+    }
+
+    protected function uploadPhoto($request,$student)
+    {
+        $file      = $request->file('student_photo');
+        // $imageName = $file->getClientOriginalName(); 
+        $imageName = time().'.'.$file->getClientOriginalExtension(); 
+
+        $directory = 'admin/assets/images/students/';
+        $imageUrl = $directory.$imageName;
+
+        Image::make($file)->resize(300,300)->save($imageUrl);
+
+        $student->student_photo = $imageUrl;
+        $student->update();
     }
 }
