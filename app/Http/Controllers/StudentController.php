@@ -232,4 +232,48 @@ class StudentController extends Controller
         $student->student_photo = $imageUrl;
         $student->update();
     }
+
+
+    // =============== Batch Wise Student Section ================
+
+    public function batchSelectionForm()
+    {
+        $classes = ClassName::where('status','=',1)->get();
+        return view('admin.student.batch.batch-selection-form',compact('classes'));
+    }
+
+    public function classAndTypeWiseBatchList(Request $request)
+    {
+        $batches = Batch::where([
+                    'class_id'        => $request->class_id,
+                    'student_type_id' => $request->student_type_id,
+                    'status'   => 1
+                ])->get();
+
+        return view('admin.student.batch.batch-list',compact('batches'));
+    }
+
+    public function batchWiseStudentList(Request $request)
+    {
+        $students = DB::table('students')  //remember : I exchange the data around equal just left-right compare with video 
+            ->join('schools','schools.id','=','students.school_id')
+            ->join('student_type_details','student_type_details.student_id','=','students.id')
+            ->join('batches','batches.id','=','student_type_details.batch_id')
+            ->select('students.*','schools.school_name','student_type_details.roll_no','batches.batch_name')
+            ->where([
+                'students.status'                  => 1,
+                'students.class_id'                => $request->class_id,
+                // 'student_type_details.class_id'    => $request->class_id,
+                'student_type_details.type_id'     => $request->type_id,
+                'student_type_details.batch_id'    => $request->batch_id,
+                'student_type_details.type_status' => 1,
+            // ])->get(); //testing for Console
+
+            ])->orderBy('student_type_details.roll_no','ASC')->get();
+
+        // return $students;
+        return view('admin.student.batch.student-list',compact('students'));
+    }
+
+
 }

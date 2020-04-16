@@ -64,13 +64,13 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/user-password-update/{id}','UserRegistrationController@userPasswordUpdate')->name('user-password-update');
     
 
-    //--- General Section ---
+    //========================= General Section =================================
     Route::get('/add-header-footer','HomePageController@addHeaderFooterForm')->name('add-header-footer');
     Route::post('/header-footer-save','HomePageController@headerFooterSave')->name('header-footer-save');
     Route::get('/manage-header-footer/{id}','HomePageController@manageHeaderFooter')->name('manage-header-footer');
     Route::post('/header-footer-update/{id}','HomePageController@headerFooterUpdate')->name('header-footer-update');
     
-    //--- Slider Section ---
+    //========================= Slider Section ==================================
     Route::get('/add-slide','SliderController@addSlide')->name('add-slide');
     Route::post('/upload-slide','SliderController@uploadSlide')->name('upload-slide');
     Route::get('/manage-slide','SliderController@manageSlide')->name('manage-slide');
@@ -80,10 +80,10 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/update-slide/{id}','SliderController@updateSlide')->name('update-slide');
     Route::get('/slide-delete/{id}','SliderController@slideDelete')->name('slide-delete');
     
-    //Photo Gallery Section
+    //======================== Photo Gallery Section ============================
     Route::get('/photo-gallery','SliderController@photoGallery')->name('photo-gallery');
 
-    //School Management section
+    //======================== School Management section ========================
     Route::get('/school/add','SchoolManagementController@addSchoolForm')->name('add-school');
     Route::post('/school/add','SchoolManagementController@schoolSave')->name('school-save');
     Route::get('/school/list','SchoolManagementController@schoolList')->name('school-list');
@@ -93,7 +93,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/school/update/{id}','SchoolManagementController@schoolUpdate')->name('school-update');
     Route::get('/school/delete/{id}','SchoolManagementController@schoolDelete')->name('school-delete');
 
-    //Class Management section
+    //======================== Class Management section =========================
     Route::get('/class/add','ClassManagementController@addClassForm')->name('add-class');
     Route::post('/class/add','ClassManagementController@classSave')->name('class-save');
     Route::get('/class/list','ClassManagementController@classList')->name('class-list');
@@ -103,7 +103,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/class/update/{id}','ClassManagementController@classUpdate')->name('class-update');
     Route::get('/class/delete/{id}','ClassManagementController@classDelete')->name('class-delete');
 
-    //Batch Management section
+    //======================== Batch Management section =========================
     Route::get('/batch/add','BatchManagementController@addBatchForm')->name('add-batch');
     Route::get('class-wise-student-type','BatchManagementController@classWiseStudentType')->name('class-wise-student-type'); //Ajax cascading-dropdown
     Route::post('/batch/add','BatchManagementController@batchSave')->name('batch-save');
@@ -115,7 +115,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/batch/edit/{id}','BatchManagementController@batchEdit')->name('batch-edit'); 
     Route::post('/batch/update/{id}','BatchManagementController@batchUpdate')->name('batch-update'); 
 
-    //Student Type Management section
+    //======================== Student Type Management section ==================
     Route::get('/student-type','StudentTypeController@index')->name('student-type');
     Route::post('/student-type-add','StudentTypeController@studentTypeAdd')->name('student-type-add'); //Create By Ajax
     Route::get('/student-type-list','StudentTypeController@studentTypeList')->name('student-type-list'); //Read By Ajax
@@ -124,20 +124,23 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/student-type-update','StudentTypeController@studentTypeUpdate')->name('student-type-update'); //update By Ajax
     Route::get('/student-type-delete','StudentTypeController@studentTypeDelete')->name('student-type-delete'); //delete By Ajax
 
-    //Student Registration Section
+    //======================== Student Registration Section =====================
     Route::get('/student-registration-form','StudentController@studentRegistrationForm')->name('student-registration-form');
     Route::get('/birng-student-type','StudentController@birngStudentType')->name('birng-student-type'); // By Ajax
     Route::get('/batch-roll-form','StudentController@batchRollForm')->name('batch-roll-form'); // By Ajax
     Route::post('/student/registration-form','StudentController@studentSave')->name('student-reg-save'); 
+    //All Running Student List
     Route::get('/student/all-running-student-list','StudentController@allRunningStudentList')->name('all-running-student-list'); 
+    //Class Wise Student Section
     Route::get('/student/class-selection-form','StudentController@classSelectionForm')->name('class-selection-form'); 
-    Route::get('/student/class-student-type','StudentController@classStudentType')->name('class-student-type'); 
+    Route::get('/student/class-student-type','StudentController@classStudentType')->name('class-student-type');  //Ajax
     Route::get('/student/class-and-type-wise-student','StudentController@classAndTypeWiseStudent')->name('class-and-type-wise-student'); 
     Route::get('/student/student-details/{id}','StudentController@studentDetails')->name('student-details'); 
     Route::post('/student/student-basic-info-update','StudentController@studentBasicInfoUpdate')->name('student-basic-info-update');
- 
-
-
+    //Batch Wise Student Section
+    Route::get('/student/batch-selection-form','StudentController@batchSelectionForm')->name('batch-selection-form'); 
+    Route::get('/student/class-and-type-wise-batch-list','StudentController@classAndTypeWiseBatchList')->name('class-and-type-wise-batch-list'); //Ajax
+    Route::get('/student/batch-wise-student-list','StudentController@batchWiseStudentList')->name('batch-wise-student-list'); //Ajax
 });
 
 
