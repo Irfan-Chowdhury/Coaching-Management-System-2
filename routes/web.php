@@ -141,6 +141,26 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/student/batch-selection-form','StudentController@batchSelectionForm')->name('batch-selection-form'); 
     Route::get('/student/class-and-type-wise-batch-list','StudentController@classAndTypeWiseBatchList')->name('class-and-type-wise-batch-list'); //Ajax
     Route::get('/student/batch-wise-student-list','StudentController@batchWiseStudentList')->name('batch-wise-student-list'); //Ajax
+
+
+    //======================== Date Management Section ==========================
+    Route::get('/date/add-year','DateManagementController@addYear')->name('add-year'); 
+
+
+    //======================== Student Attendance Section =====================
+    
+    Route::get('/attendance/add-attendance','StudentAttendanceController@batchSelectionFormForAttendanceAdd')->name('add-attendance');
+    Route::get('/attendance/batch-wise-student-list-for-attendance','StudentAttendanceController@batchWiseStudentListForAttendance')->name('batch-wise-student-list-for-attendance'); //Ajax
+    Route::post('/attendance/save-student-attendance','StudentAttendanceController@saveStudentAttendance')->name('save-student-attendance'); //Ajax
+
+    
+    // Route::group(['prefix' => 'attendance'], function () {
+
+    //     Route::get('/add-attendance','StudentAttendanceController@batchSelectionFormForAttendanceAdd')->name('add-attendance');
+    //     Route::get('/batch-wise-student-list-for-attendance','StudentAttendanceController@batchWiseStudentListForAttendance')->name('batch-wise-student-list-for-attendance'); //Ajax
+
+    // });
+
 });
 
 
