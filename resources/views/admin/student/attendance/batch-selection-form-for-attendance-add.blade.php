@@ -14,7 +14,7 @@
                 @csrf
                 <div class="form-group">
                     <div class="col-sm-12">
-                        <h4 class="text-center font-weight-bold font-italic mt-3">Batch Wise Student Attendance</h4>
+                        <h4 class="text-center font-weight-bold font-italic mt-3">Batch Wise Student Attendance Add Form</h4>
                     </div>
                 </div>
 
