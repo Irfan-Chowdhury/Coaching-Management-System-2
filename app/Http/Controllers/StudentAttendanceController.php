@@ -35,17 +35,19 @@ class StudentAttendanceController extends Controller
         else{ //যদি এটেন্ডেন্স না নিয়ে থাকে তাহলে এটেন্ডেন্স নেয়ার জন্য ফর্মটা দেখাবে 
 
             $students = DB::table('students')  //remember : I exchange the data around equal just left-right compare with video 
-            ->join('schools','schools.id','=','students.school_id')
-            ->join('student_type_details','student_type_details.student_id','=','students.id')
-            ->join('batches','batches.id','=','student_type_details.batch_id')
-            ->select('students.*','schools.school_name','student_type_details.roll_no','batches.batch_name')
-            ->where([
-                'students.status'                  => 1,
-                'students.class_id'                => $request->class_id,
-                'student_type_details.type_id'     => $request->type_id,
-                'student_type_details.batch_id'    => $request->batch_id,
-                'student_type_details.type_status' => 1,
-            ])->orderBy('student_type_details.roll_no','ASC')->get();
+                        ->join('schools','schools.id','=','students.school_id')
+                        ->join('student_type_details','student_type_details.student_id','=','students.id')
+                        ->join('batches','batches.id','=','student_type_details.batch_id')
+                        ->select('students.*','schools.school_name','student_type_details.roll_no','batches.batch_name')
+                        ->where([
+                            'students.status'                  => 1,
+                            'students.class_id'                => $request->class_id,
+                            'student_type_details.type_id'     => $request->type_id,
+                            'student_type_details.batch_id'    => $request->batch_id,
+                            'student_type_details.type_status' => 1,
+                        ])
+                        ->orderBy('student_type_details.roll_no','ASC')
+                        ->get();
 
             // return $students;
             return view('admin.student.attendance.student-list-for-attendance-add',compact('students'));
@@ -91,5 +93,35 @@ class StudentAttendanceController extends Controller
             $data->user_id          = $userId; //student_id
             $data->save();
         }
-    }   
+    }
+    
+    public function viewAttendance()
+    {
+        $classes = ClassName::where('status','=','1')->get();
+        return view('admin.student.attendance.batch-selection-form-for-attendance-view',compact('classes'));
+    }
+
+    public function batchWiseStudentListAttendanceView(Request $request)
+    {   
+        $date = $request->date;
+
+        $attendances = DB::table('student_attendances')  //remember : I exchange the data around equal just left-right compare with video 
+                        ->join('students','students.id','=','student_attendances.student_id')
+                        ->join('schools','schools.id','=','students.school_id')
+                        ->join('student_type_details','student_type_details.student_id','=','students.id')
+                        ->select('student_attendances.*','students.student_name','students.sms_mobile','schools.school_name','student_type_details.roll_no')
+                        ->where([
+                            'student_attendances.class_id'     => $request->class_id,
+                            'student_attendances.type_id'      => $request->type_id,
+                            'student_attendances.batch_id'     => $request->batch_id,
+                            'student_type_details.type_id'     => $request->type_id, //student_type_details এ একই নামের দুটা টাইপ আছে তাই, তাই এখনে এই কন্ডিশনটা না লিখলে একই নাম দুবার দেখাবে 
+                        ])
+                        // ->whereBetween('student_attendances.created_at',[$date.'00.00.00', $date.'23.59.59'])
+                        ->whereDate('student_attendances.created_at',$date)
+                        ->orderBy('student_type_details.roll_no','ASC')
+                        ->get();
+        
+        // return $attendance;
+        return view('admin.student.attendance.batch-wise-attendance-view',compact('attendances'));
+    }
 }

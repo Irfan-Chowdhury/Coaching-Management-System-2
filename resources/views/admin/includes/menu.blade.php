@@ -29,7 +29,7 @@
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                     <li class=""><a class="dropdown-item" href="{{route('add-attendance')}}">Add Attendance</a></li>
-                    <li class=""><a class="dropdown-item" href="#">View Attendance</a></li>
+                    <li class=""><a class="dropdown-item" href="{{route('view-attendance')}}">View Attendance</a></li>
                     <li class=""><a class="dropdown-item" href="#">Edit Attendence</a></li>
                 </ul>
             </li>

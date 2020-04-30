@@ -150,11 +150,14 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/attendance/add-attendance','StudentAttendanceController@batchSelectionFormForAttendanceAdd')->name('add-attendance');
     Route::get('/attendance/batch-wise-student-list-for-attendance','StudentAttendanceController@batchWiseStudentListForAttendance')->name('batch-wise-student-list-for-attendance'); //Ajax
     Route::post('/attendance/save-student-attendance','StudentAttendanceController@saveStudentAttendance')->name('save-student-attendance'); 
+    //view
+    Route::get('/attendance/view-attendance','StudentAttendanceController@viewAttendance')->name('view-attendance'); 
+    Route::get('/attendance/batch-wise-student-list-attendance-view','StudentAttendanceController@batchWiseStudentListAttendanceView')->name('batch-wise-student-list-attendance-view'); //Ajax
 
 });
 
 
-
+//46:47
 
 
 
