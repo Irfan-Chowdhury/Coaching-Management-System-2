@@ -10,9 +10,11 @@
 
             @include('admin.includes.alert')
 
+            <form action="{{route('student-attendance-update')}}" method="post">
+                @csrf
                 <div class="form-group">
                     <div class="col-sm-12">
-                        <h4 class="text-center font-weight-bold font-italic mt-3">Batch Wise Student Attendance View</h4>
+                        <h4 class="text-center font-weight-bold font-italic mt-3">Batch Wise Student Attendance Edit Form</h4>
                     </div>
                 </div>
 
@@ -38,10 +40,7 @@
                             <option value="">--Select Batch--</option>
                         </select>
                     </div>
-                   
-                    <div class="col">
-                        <input type="date" name="date" id="date" class="form-control">
-                    </div>
+    
                 </div>
 
                 <hr>
@@ -52,6 +51,7 @@
 
                     </div>
                 </div>
+            </form>
         </div>
     </div>
 </section>
@@ -100,43 +100,19 @@
         }
     });
     
-    // //for Showing Batch Wise Student List For Attendance
-    // $('#batchId').change(function(){
-    //     var classId = $('#classId').val();
-    //     var typeId  = $('#typeId').val();
-    //     var batchId = $(this).val(); //যেটাতে ক্লিক করলে পরেরটা লোড হবে- "this" ব্যবহার করতে হয় 
-    //     if (classId && typeId && batchId) 
-    //     {
-    //         $('#overlay .loader').show();
-    //         // $.get("{{route('batch-wise-student-list')}}",{
-    //         $.get("{{route('batch-wise-student-list-for-attendance')}}",{
-    //             class_id:classId,
-    //             type_id:typeId,
-    //             batch_id:batchId,
-    //         }, function (data) {
-    //             //console.log(data);
-    //             $('#studentList').empty().html(data);
-    //             $('#overlay .loader').hide(); //when the view return then loader will be off
-    //         });
-    //     }
-    // });
-
-
     //for Showing Batch Wise Student List For Attendance
-    $('#date').change(function(){
+    $('#batchId').change(function(){
         var classId = $('#classId').val();
         var typeId  = $('#typeId').val();
-        var batchId = $('#batchId').val();
-        var date    = $(this).val(); //যেটাতে ক্লিক করলে পরেরটা লোড হবে- "this" ব্যবহার করতে হয় 
-        if (classId && typeId && batchId && date) 
+        var batchId = $(this).val(); //যেটাতে ক্লিক করলে পরেরটা লোড হবে- "this" ব্যবহার করতে হয় 
+        if (classId && typeId && batchId) 
         {
             $('#overlay .loader').show();
             // $.get("{{route('batch-wise-student-list')}}",{
-            $.get("{{route('batch-wise-student-list-attendance-view')}}",{
-                class_id :classId,
-                type_id  :typeId,
-                batch_id :batchId,
-                date     :date,
+            $.get("{{route('batch-wise-student-list-for-attendance-edit')}}",{ //in video- "student-list-for-attendance-edit"
+                class_id:classId, 
+                type_id:typeId,
+                batch_id:batchId,
             }, function (data) {
                 //console.log(data);
                 $('#studentList').empty().html(data);
@@ -144,6 +120,7 @@
             });
         }
     });
+
 </script>
 
 

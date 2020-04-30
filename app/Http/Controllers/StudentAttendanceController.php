@@ -95,6 +95,8 @@ class StudentAttendanceController extends Controller
         }
     }
     
+    // =================== View ====================
+
     public function viewAttendance()
     {
         $classes = ClassName::where('status','=','1')->get();
@@ -105,22 +107,88 @@ class StudentAttendanceController extends Controller
     {   
         $date = $request->date;
 
-        $attendances = DB::table('student_attendances')  //remember : I exchange the data around equal just left-right compare with video 
-                        ->join('students','students.id','=','student_attendances.student_id')
-                        ->join('schools','schools.id','=','students.school_id')
-                        ->join('student_type_details','student_type_details.student_id','=','students.id')
-                        ->select('student_attendances.*','students.student_name','students.sms_mobile','schools.school_name','student_type_details.roll_no')
-                        ->where([
-                            'student_attendances.class_id'     => $request->class_id,
-                            'student_attendances.type_id'      => $request->type_id,
-                            'student_attendances.batch_id'     => $request->batch_id,
-                            'student_type_details.type_id'     => $request->type_id, //student_type_details এ একই নামের দুটা টাইপ আছে তাই, তাই এখনে এই কন্ডিশনটা না লিখলে একই নাম দুবার দেখাবে 
-                        ])
-                        // ->whereBetween('student_attendances.created_at',[$date.'00.00.00', $date.'23.59.59'])
-                        ->whereDate('student_attendances.created_at',$date)
-                        ->orderBy('student_type_details.roll_no','ASC')
+        $check = $this->attendanceCheck($request, $date); //goto-> "protected function attendanceCheck($request, $date)" bellow
+
+        if (count($check)>0) //before View first check is it already submitted or not 
+        {
+            $attendances = $this->getAttendance($request, $date); //goto ->  "protected function getAttendance($request, $date)" bellow
+
+        }
+        else {
+            return view('admin.student.attendance.alert');
+        }
+    }
+
+
+    // ==================== Edit ========================
+    public function editAttendance()
+    {
+        $classes = ClassName::where('status','=','1')->get();
+        return view('admin.student.attendance.batch-selection-form-for-attendance-edit',compact('classes'));
+    }
+
+    public function batchWiseStudentListForAttendanceEdit(Request $request) //Ajax || after select into back
+    {
+        $date = date('Y-m-d');
+
+        $check = $this->attendanceCheck($request, $date); //goto-> "protected function attendanceCheck($request, $date)" bellow
+
+        if (count($check)>0) //before Update first check is it already submitted or not 
+        {
+            $attendances = $this->getAttendance($request, $date); //goto ->  "protected function getAttendance($request, $date)" bellow
+        }
+        else {
+            return view('admin.student.attendance.alert');
+        }
+    }
+
+    public function studentAttendanceUpdate(Request $request)
+    {
+        $attendances = $request->attendance;
+
+        foreach ($attendances as $id => $attendance) { //one by one || attendance[{{$attendance->id}}]
+            $data = StudentAttendance::find($id);
+            $data->attendance = $attendance;
+            $data->update();
+        }
+
+        return redirect()->back()->with('message','Attendance Updated Successfully!!!');
+    }
+
+
+
+    
+    protected function attendanceCheck($request, $date)
+    {
+        $check = StudentAttendance::where([
+                            'class_id'  => $request->class_id,
+                            'type_id'   => $request->type_id,
+                            'batch_id'  => $request->batch_id,
+                        ]) 
+                        ->whereDate('created_at',$date)
                         ->get();
         
+        return $check;
+    }
+
+    protected function getAttendance($request, $date)
+    {
+        $attendances = DB::table('student_attendances')  //remember : I exchange the data around equal just left-right compare with video 
+                            ->join('students','students.id','=','student_attendances.student_id')
+                            ->join('schools','schools.id','=','students.school_id')
+                            ->join('student_type_details','student_type_details.student_id','=','students.id')
+                            ->select('student_attendances.*','students.student_name','students.sms_mobile','schools.school_name','student_type_details.roll_no')
+                            ->where([
+                                'student_attendances.class_id'     => $request->class_id,
+                                'student_attendances.type_id'      => $request->type_id,
+                                'student_attendances.batch_id'     => $request->batch_id,
+                                'student_type_details.type_id'     => $request->type_id, //student_type_details এ একই নামের দুটা টাইপ আছে তাই, তাই এখনে এই কন্ডিশনটা না লিখলে একই নাম দুবার দেখাবে 
+                            ])
+                            // ->whereBetween('student_attendances.created_at',[$date.'00.00.00', $date.'23.59.59'])
+                            ->whereDate('student_attendances.created_at',$date)
+                            ->orderBy('student_type_details.roll_no','ASC')
+                            ->get();
+            
         // return $attendance;
         return view('admin.student.attendance.batch-wise-attendance-view',compact('attendances'));
     }

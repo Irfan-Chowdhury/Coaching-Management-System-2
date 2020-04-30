@@ -153,11 +153,11 @@ Route::group(['middleware' => ['auth']], function () {
     //view
     Route::get('/attendance/view-attendance','StudentAttendanceController@viewAttendance')->name('view-attendance'); 
     Route::get('/attendance/batch-wise-student-list-attendance-view','StudentAttendanceController@batchWiseStudentListAttendanceView')->name('batch-wise-student-list-attendance-view'); //Ajax
+    //Edit
+    Route::get('/attendance/edit-attendance','StudentAttendanceController@editAttendance')->name('edit-attendance');
+    Route::get('/attendance/batch-wise-student-list-for-attendance-edit','StudentAttendanceController@batchWiseStudentListForAttendanceEdit')->name('batch-wise-student-list-for-attendance-edit'); //Ajax || //in video- "student-list-for-attendance-edit"
+    Route::post('/attendance/student-attendance-update','StudentAttendanceController@studentAttendanceUpdate')->name('student-attendance-update'); //Ajax
 
 });
-
-
-//46:47
-
 
 
